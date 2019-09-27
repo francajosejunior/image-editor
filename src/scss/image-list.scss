@@ -1,0 +1,13 @@
+.image-list {
+  display: flex;
+  height: 100%;
+
+  .right {
+    flex: 1;
+    height: 1hv;
+    overflow: scroll;
+  }
+  .center {
+    flex: 4;
+  }
+}
