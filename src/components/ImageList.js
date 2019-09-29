@@ -3,6 +3,7 @@ import React from 'react'
 import './../scss/image-list.scss'
 import MainFrame from './MainFrame'
 import MainFrameContainer from '../containers/MainFrameContainer'
+import PreloadImagesContainer from '../containers/PreloadImagesContainer'
 
 const ImageList = ({ images = [], onClick, image }) => {
   return (

@@ -1,5 +1,9 @@
 import React, { Component, createRef } from 'react'
 
+const displayNone = {
+  display: 'none'
+}
+
 export class Img extends Component {
   state = {
     imageList: {}
@@ -29,14 +33,17 @@ export class Img extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { imageList } = this.state
-
-    if (!imageList[this.props.src]) {
-      this.addSrc(this.props.src)
+    if (this.props.src) {
+      if (!imageList[this.props.src]) {
+        this.addSrc(this.props.src)
+      }
     }
   }
 
   handleImageLoaded = src => () => {
     const { imageList } = this.state
+
+    // console.log(src)
 
     this.setState({
       imageList: {
@@ -50,12 +57,30 @@ export class Img extends Component {
   }
 
   render() {
-    const Loader = this.props.loaderComponent
+    const { imageList } = this.state
+    const { src, loaderComponent, ...rest } = this.props
+    if (!imageList[src]) {
+      return null
+    }
 
-    //if (loading) {
-    return <Loader />
-    //}
-    return <></>
+    const Loader = loaderComponent
+    const { loading } = imageList[src]
+
+    return (
+      <>
+        {loading && <Loader />}
+        {Object.keys(imageList).map(srcCurrent => {
+          return (
+            <img
+              {...rest}
+              key={srcCurrent}
+              src={srcCurrent}
+              style={srcCurrent !== src ? displayNone : {}}
+            />
+          )
+        })}
+      </>
+    )
   }
 }
 
